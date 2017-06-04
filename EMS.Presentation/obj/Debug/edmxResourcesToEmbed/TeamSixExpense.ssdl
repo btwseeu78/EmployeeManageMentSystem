@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TEMS.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TEMSStoreContainer">
+    <EntitySet Name="EmployeeMaster" EntityType="TEMS.Store.EmployeeMaster" store:Type="Tables" Schema="TEMSGroup6" />
+    <EntitySet Name="ExpenseDetails" EntityType="TEMS.Store.ExpenseDetails" store:Type="Tables" Schema="TEMSGroup6" />
+    <EntitySet Name="TravelDetails" EntityType="TEMS.Store.TravelDetails" store:Type="Tables" Schema="TEMSGroup6" />
+    <EntitySet Name="TravelRequest" EntityType="TEMS.Store.TravelRequest" store:Type="Tables" Schema="TEMSGroup6" />
+    <AssociationSet Name="FK_EID" Association="TEMS.Store.FK_EID">
+      <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+      <End Role="TravelRequest" EntitySet="TravelRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpID1" Association="TEMS.Store.FK_EmpID1">
+      <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+      <End Role="TravelDetails" EntitySet="TravelDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MRNO" Association="TEMS.Store.FK_MRNO">
+      <End Role="TravelDetails" EntitySet="TravelDetails" />
+      <End Role="ExpenseDetails" EntitySet="ExpenseDetails" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="EmployeeMaster">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="20" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="20" />
+    <Property Name="LastName" Type="varchar" MaxLength="20" />
+    <Property Name="Location" Type="varchar" MaxLength="20" />
+    <Property Name="ReimbursementAccNo" Type="varchar" MaxLength="30" />
+    <Property Name="Designation" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="ExpenseDetails">
+    <Key>
+      <PropertyRef Name="ExpenseReportID" />
+    </Key>
+    <Property Name="ExpenseReportID" Type="int" Nullable="false" />
+    <Property Name="ExpenseType" Type="varchar" MaxLength="20" />
+    <Property Name="ExpenseDate" Type="datetime" />
+    <Property Name="AmountSpent" Type="int" />
+    <Property Name="PaymentType" Type="varchar" MaxLength="20" />
+    <Property Name="MR_Number" Type="int" />
+    <Property Name="ReimbursementAccNo" Type="varchar" MaxLength="30" />
+    <Property Name="ExpenseStatus" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="TravelDetails">
+    <Key>
+      <PropertyRef Name="MR_Number" />
+    </Key>
+    <Property Name="MR_Number" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" />
+    <Property Name="ApplyDate" Type="datetime" />
+    <Property Name="ReasonForTravel" Type="nvarchar(max)" />
+    <Property Name="TravelDate" Type="datetime" />
+    <Property Name="TravelMode" Type="varchar" MaxLength="20" />
+    <Property Name="FromCity" Type="varchar" MaxLength="20" />
+    <Property Name="ToCity" Type="varchar" MaxLength="20" />
+    <Property Name="TravelDuration" Type="int" />
+  </EntityType>
+  <EntityType Name="TravelRequest">
+    <Key>
+      <PropertyRef Name="TravelID" />
+    </Key>
+    <Property Name="TravelID" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" />
+    <Property Name="TravelDate" Type="datetime" />
+    <Property Name="FromCity" Type="varchar" MaxLength="20" />
+    <Property Name="ToCity" Type="varchar" MaxLength="20" />
+    <Property Name="TravelDuration" Type="int" />
+  </EntityType>
+  <Association Name="FK_EID">
+    <End Role="EmployeeMaster" Type="TEMS.Store.EmployeeMaster" Multiplicity="0..1" />
+    <End Role="TravelRequest" Type="TEMS.Store.TravelRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeMaster">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="TravelRequest">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpID1">
+    <End Role="EmployeeMaster" Type="TEMS.Store.EmployeeMaster" Multiplicity="0..1" />
+    <End Role="TravelDetails" Type="TEMS.Store.TravelDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeMaster">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="TravelDetails">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MRNO">
+    <End Role="TravelDetails" Type="TEMS.Store.TravelDetails" Multiplicity="0..1" />
+    <End Role="ExpenseDetails" Type="TEMS.Store.ExpenseDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TravelDetails">
+        <PropertyRef Name="MR_Number" />
+      </Principal>
+      <Dependent Role="ExpenseDetails">
+        <PropertyRef Name="MR_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+      warning 6013: The table/view 'Training_14Nov2016_Hinjawadi.TEMSGroup6.ExpenseAccepted' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="ExpenseAccepted">
+        <Property Name="ExpenseReportID" Type="int" />
+        <Property Name="AmountPaid" Type="bigint" />
+        <Property Name="PaymentDate" Type="datetime" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Training_14Nov2016_Hinjawadi.TEMSGroup6.ExpenseRejected' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="ExpenseRejected">
+        <Property Name="ExpenseReportID" Type="int" />
+        <Property Name="ReasonForRejection" Type="nvarchar(max)" />
+        <Property Name="RejectionDate" Type="datetime" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Training_14Nov2016_Hinjawadi.TEMSGroup6.LogIn' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="LogIn">
+        <Property Name="EmployeeID" Type="int" />
+        <Property Name="PasswordHash" Type="binary" MaxLength="64" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Training_14Nov2016_Hinjawadi.TEMSGroup6.TravelAcceptanceStatus' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="TravelAcceptanceStatus">
+        <Property Name="TravelID" Type="int" />
+        <Property Name="AcceptanceStatus" Type="varchar" MaxLength="10" />
+      </EntityType>-->
+</Schema>

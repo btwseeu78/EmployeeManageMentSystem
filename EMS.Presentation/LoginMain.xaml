@@ -1,0 +1,19 @@
+﻿<Window x:Class="EMS.Presentation.LoginMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Login" Height="768" Width="1366" WindowStartupLocation="CenterOwner">
+    <Grid RenderTransformOrigin="0.457,0.508" >
+        <Label Content="Login Page" Margin="10,10,13,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontFamily="SketchFlow Print" FontSize="25" Height="75"/>
+        <Label Content="USER NAME" HorizontalAlignment="Left" Margin="10,105,406,0" VerticalAlignment="Top" Width="101" FontFamily="SketchFlow Print"/>
+        <Label Content="PASSWORD" HorizontalAlignment="Left" Margin="0,181,0,0" VerticalAlignment="Top" Width="101" FontFamily="SketchFlow Print" RenderTransformOrigin="0.466,3.683" Height="29"/>
+        <TextBox HorizontalAlignment="Stretch" x:Name="txtUsername" Background="Snow" Height="40" Margin="126,105,35,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="SketchFlow Print"/>
+        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Stretch" Background="Snow" Margin="126,181,38,0" VerticalAlignment="Top" Height="39"/>
+        <Button x:Name="Login" Content="Login" HorizontalAlignment="Stretch" Margin="475,295,573,0" VerticalAlignment="Top" Click="Login_Click" Height="40"/>
+        <TextBlock x:Name="tblck" FontFamily="SketchFlow Print" HorizontalAlignment="Left" Margin="10,404,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="170">
+            <Hyperlink x:Name="ForGotPwd" FontSize="15" Click="OnClick">Forgot Password ?</Hyperlink>
+            
+        </TextBlock>
+
+
+    </Grid>
+</Window>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TeamSixmodelStoreContainer" CdmEntityContainer="TeamSixEntity">
+    <EntitySetMapping Name="EmployeeMasters">
+      <EntityTypeMapping TypeName="TeamSixmodel.EmployeeMaster">
+        <MappingFragment StoreEntitySet="EmployeeMaster">
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="ReimbursementAccNo" ColumnName="ReimbursementAccNo" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExpenseDetails">
+      <EntityTypeMapping TypeName="TeamSixmodel.ExpenseDetail">
+        <MappingFragment StoreEntitySet="ExpenseDetails">
+          <ScalarProperty Name="ExpenseReportID" ColumnName="ExpenseReportID" />
+          <ScalarProperty Name="ExpenseType" ColumnName="ExpenseType" />
+          <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
+          <ScalarProperty Name="AmountSpent" ColumnName="AmountSpent" />
+          <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+          <ScalarProperty Name="MR_Number" ColumnName="MR_Number" />
+          <ScalarProperty Name="ReimbursementAccNo" ColumnName="ReimbursementAccNo" />
+          <ScalarProperty Name="ExpenseStatus" ColumnName="ExpenseStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TravelDetails">
+      <EntityTypeMapping TypeName="TeamSixmodel.TravelDetail">
+        <MappingFragment StoreEntitySet="TravelDetails">
+          <ScalarProperty Name="MR_Number" ColumnName="MR_Number" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="ApplyDate" ColumnName="ApplyDate" />
+          <ScalarProperty Name="ReasonForTravel" ColumnName="ReasonForTravel" />
+          <ScalarProperty Name="TravelDate" ColumnName="TravelDate" />
+          <ScalarProperty Name="TravelMode" ColumnName="TravelMode" />
+          <ScalarProperty Name="FromCity" ColumnName="FromCity" />
+          <ScalarProperty Name="ToCity" ColumnName="ToCity" />
+          <ScalarProperty Name="TravelDuration" ColumnName="TravelDuration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TravelRequests">
+      <EntityTypeMapping TypeName="TeamSixmodel.TravelRequest">
+        <MappingFragment StoreEntitySet="TravelRequest">
+          <ScalarProperty Name="TravelID" ColumnName="TravelID" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="TravelDate" ColumnName="TravelDate" />
+          <ScalarProperty Name="FromCity" ColumnName="FromCity" />
+          <ScalarProperty Name="ToCity" ColumnName="ToCity" />
+          <ScalarProperty Name="TravelDuration" ColumnName="TravelDuration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogIns">
+      <EntityTypeMapping TypeName="TeamSixmodel.LogIn">
+        <MappingFragment StoreEntitySet="LogIn">
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

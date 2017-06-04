@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TeamSixModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="TeamSixModelStoreContainer">
+          <EntitySet Name="EmployeeMaster" EntityType="TeamSixModel.Store.EmployeeMaster" store:Type="Tables" Schema="TEMSGroup6" />
+          <EntitySet Name="ExpenseDetails" EntityType="TeamSixModel.Store.ExpenseDetails" store:Type="Tables" Schema="TEMSGroup6" />
+          <EntitySet Name="TravelDetails" EntityType="TeamSixModel.Store.TravelDetails" store:Type="Tables" Schema="TEMSGroup6" />
+          <EntitySet Name="TravelRequest" EntityType="TeamSixModel.Store.TravelRequest" store:Type="Tables" Schema="TEMSGroup6" />
+          <AssociationSet Name="FK_EID" Association="TeamSixModel.Store.FK_EID">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+            <End Role="TravelRequest" EntitySet="TravelRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpID1" Association="TeamSixModel.Store.FK_EmpID1">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+            <End Role="TravelDetails" EntitySet="TravelDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MRNO" Association="TeamSixModel.Store.FK_MRNO">
+            <End Role="TravelDetails" EntitySet="TravelDetails" />
+            <End Role="ExpenseDetails" EntitySet="ExpenseDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="EmployeeMaster">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="20" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="20" />
+          <Property Name="LastName" Type="varchar" MaxLength="20" />
+          <Property Name="Location" Type="varchar" MaxLength="20" />
+          <Property Name="ReimbursementAccNo" Type="varchar" MaxLength="30" />
+          <Property Name="UserName" Type="varchar" MaxLength="20" />
+          <Property Name="PasswordHASH" Type="binary" MaxLength="64" />
+          <Property Name="Designation" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="ExpenseDetails">
+          <Key>
+            <PropertyRef Name="ExpenseReportID" />
+          </Key>
+          <Property Name="ExpenseReportID" Type="int" Nullable="false" />
+          <Property Name="ExpenseType" Type="varchar" MaxLength="20" />
+          <Property Name="ExpenseDate" Type="datetime" />
+          <Property Name="AmountSpent" Type="int" />
+          <Property Name="PaymentType" Type="varchar" MaxLength="20" />
+          <Property Name="MR_Number" Type="int" />
+          <Property Name="ReimbursementAccNo" Type="varchar" MaxLength="30" />
+          <Property Name="ExpenseStatus" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TravelDetails">
+          <Key>
+            <PropertyRef Name="MR_Number" />
+          </Key>
+          <Property Name="MR_Number" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="ApplyDate" Type="datetime" />
+          <Property Name="ReasonForTravel" Type="nvarchar(max)" />
+          <Property Name="TravelDate" Type="datetime" />
+          <Property Name="TravelMode" Type="varchar" MaxLength="20" />
+          <Property Name="FromCity" Type="varchar" MaxLength="20" />
+          <Property Name="ToCity" Type="varchar" MaxLength="20" />
+          <Property Name="TravelDuration" Type="int" />
+        </EntityType>
+        <EntityType Name="TravelRequest">
+          <Key>
+            <PropertyRef Name="TravelID" />
+          </Key>
+          <Property Name="TravelID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="TravelDate" Type="datetime" />
+          <Property Name="FromCity" Type="varchar" MaxLength="20" />
+          <Property Name="ToCity" Type="varchar" MaxLength="20" />
+          <Property Name="TravelDuration" Type="int" />
+        </EntityType>
+        <Association Name="FK_EID">
+          <End Role="EmployeeMaster" Type="TeamSixModel.Store.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TravelRequest" Type="TeamSixModel.Store.TravelRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="TravelRequest">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpID1">
+          <End Role="EmployeeMaster" Type="TeamSixModel.Store.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TravelDetails" Type="TeamSixModel.Store.TravelDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="TravelDetails">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MRNO">
+          <End Role="TravelDetails" Type="TeamSixModel.Store.TravelDetails" Multiplicity="0..1" />
+          <End Role="ExpenseDetails" Type="TeamSixModel.Store.ExpenseDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TravelDetails">
+              <PropertyRef Name="MR_Number" />
+            </Principal>
+            <Dependent Role="ExpenseDetails">
+              <PropertyRef Name="MR_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+      warning 6013: The table/view 'Training_14Nov2016_Hinjawadi.TEMSGroup6.ExpenseAccepted' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="ExpenseAccepted">
+        <Property Name="ExpenseReportID" Type="int" />
+        <Property Name="AmountPaid" Type="bigint" />
+        <Property Name="PaymentDate" Type="datetime" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Training_14Nov2016_Hinjawadi.TEMSGroup6.ExpenseRejected' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="ExpenseRejected">
+        <Property Name="ExpenseReportID" Type="int" />
+        <Property Name="ReasonForRejection" Type="nvarchar(max)" />
+        <Property Name="RejectionDate" Type="datetime" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Training_14Nov2016_Hinjawadi.TEMSGroup6.TravelAcceptanceStatus' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="TravelAcceptanceStatus">
+        <Property Name="TravelID" Type="int" />
+        <Property Name="AcceptanceStatus" Type="varchar" MaxLength="10" />
+      </EntityType>-->
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TeamSixModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TeamSixEntity" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="EmployeeMasters" EntityType="TeamSixModel.EmployeeMaster" />
+          <EntitySet Name="ExpenseDetails" EntityType="TeamSixModel.ExpenseDetail" />
+          <EntitySet Name="TravelDetails" EntityType="TeamSixModel.TravelDetail" />
+          <EntitySet Name="TravelRequests" EntityType="TeamSixModel.TravelRequest" />
+          <AssociationSet Name="FK_EID" Association="TeamSixModel.FK_EID">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+            <End Role="TravelRequest" EntitySet="TravelRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpID1" Association="TeamSixModel.FK_EmpID1">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+            <End Role="TravelDetails" EntitySet="TravelDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MRNO" Association="TeamSixModel.FK_MRNO">
+            <End Role="TravelDetails" EntitySet="TravelDetails" />
+            <End Role="ExpenseDetails" EntitySet="ExpenseDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="EmployeeMaster">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Location" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="ReimbursementAccNo" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Designation" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="UserName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="TravelRequests" Relationship="TeamSixModel.FK_EID" FromRole="EmployeeMaster" ToRole="TravelRequest" />
+          <NavigationProperty Name="TravelDetails" Relationship="TeamSixModel.FK_EmpID1" FromRole="EmployeeMaster" ToRole="TravelDetails" />
+          <Property Type="Binary" Name="PasswordHASH" MaxLength="64" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="ExpenseDetail">
+          <Key>
+            <PropertyRef Name="ExpenseReportID" />
+          </Key>
+          <Property Name="ExpenseReportID" Type="Int32" Nullable="false" />
+          <Property Name="ExpenseType" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="ExpenseDate" Type="DateTime" Precision="3" />
+          <Property Name="AmountSpent" Type="Int32" />
+          <Property Name="PaymentType" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="MR_Number" Type="Int32" />
+          <Property Name="ReimbursementAccNo" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="ExpenseStatus" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="TravelDetail" Relationship="TeamSixModel.FK_MRNO" FromRole="ExpenseDetails" ToRole="TravelDetails" />
+        </EntityType>
+        <EntityType Name="TravelDetail">
+          <Key>
+            <PropertyRef Name="MR_Number" />
+          </Key>
+          <Property Name="MR_Number" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="ApplyDate" Type="DateTime" Precision="3" />
+          <Property Name="ReasonForTravel" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="TravelDate" Type="DateTime" Precision="3" />
+          <Property Name="TravelMode" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="FromCity" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="ToCity" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="TravelDuration" Type="Int32" />
+          <NavigationProperty Name="EmployeeMaster" Relationship="TeamSixModel.FK_EmpID1" FromRole="TravelDetails" ToRole="EmployeeMaster" />
+          <NavigationProperty Name="ExpenseDetails" Relationship="TeamSixModel.FK_MRNO" FromRole="TravelDetails" ToRole="ExpenseDetails" />
+        </EntityType>
+        <EntityType Name="TravelRequest">
+          <Key>
+            <PropertyRef Name="TravelID" />
+          </Key>
+          <Property Name="TravelID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="TravelDate" Type="DateTime" Precision="3" />
+          <Property Name="FromCity" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="ToCity" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="TravelDuration" Type="Int32" />
+          <NavigationProperty Name="EmployeeMaster" Relationship="TeamSixModel.FK_EID" FromRole="TravelRequest" ToRole="EmployeeMaster" />
+        </EntityType>
+        <Association Name="FK_EID">
+          <End Role="EmployeeMaster" Type="TeamSixModel.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TravelRequest" Type="TeamSixModel.TravelRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="TravelRequest">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpID1">
+          <End Role="EmployeeMaster" Type="TeamSixModel.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TravelDetails" Type="TeamSixModel.TravelDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="TravelDetails">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MRNO">
+          <End Role="TravelDetails" Type="TeamSixModel.TravelDetail" Multiplicity="0..1" />
+          <End Role="ExpenseDetails" Type="TeamSixModel.ExpenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TravelDetails">
+              <PropertyRef Name="MR_Number" />
+            </Principal>
+            <Dependent Role="ExpenseDetails">
+              <PropertyRef Name="MR_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TeamSixModelStoreContainer" CdmEntityContainer="TeamSixEntity">
+          <EntitySetMapping Name="EmployeeMasters">
+            <EntityTypeMapping TypeName="TeamSixModel.EmployeeMaster">
+              <MappingFragment StoreEntitySet="EmployeeMaster">
+                <ScalarProperty Name="PasswordHASH" ColumnName="PasswordHASH" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="ReimbursementAccNo" ColumnName="ReimbursementAccNo" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpenseDetails">
+            <EntityTypeMapping TypeName="TeamSixModel.ExpenseDetail">
+              <MappingFragment StoreEntitySet="ExpenseDetails">
+                <ScalarProperty Name="ExpenseReportID" ColumnName="ExpenseReportID" />
+                <ScalarProperty Name="ExpenseType" ColumnName="ExpenseType" />
+                <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
+                <ScalarProperty Name="AmountSpent" ColumnName="AmountSpent" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="MR_Number" ColumnName="MR_Number" />
+                <ScalarProperty Name="ReimbursementAccNo" ColumnName="ReimbursementAccNo" />
+                <ScalarProperty Name="ExpenseStatus" ColumnName="ExpenseStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TravelDetails">
+            <EntityTypeMapping TypeName="TeamSixModel.TravelDetail">
+              <MappingFragment StoreEntitySet="TravelDetails">
+                <ScalarProperty Name="MR_Number" ColumnName="MR_Number" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ApplyDate" ColumnName="ApplyDate" />
+                <ScalarProperty Name="ReasonForTravel" ColumnName="ReasonForTravel" />
+                <ScalarProperty Name="TravelDate" ColumnName="TravelDate" />
+                <ScalarProperty Name="TravelMode" ColumnName="TravelMode" />
+                <ScalarProperty Name="FromCity" ColumnName="FromCity" />
+                <ScalarProperty Name="ToCity" ColumnName="ToCity" />
+                <ScalarProperty Name="TravelDuration" ColumnName="TravelDuration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TravelRequests">
+            <EntityTypeMapping TypeName="TeamSixModel.TravelRequest">
+              <MappingFragment StoreEntitySet="TravelRequest">
+                <ScalarProperty Name="TravelID" ColumnName="TravelID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="TravelDate" ColumnName="TravelDate" />
+                <ScalarProperty Name="FromCity" ColumnName="FromCity" />
+                <ScalarProperty Name="ToCity" ColumnName="ToCity" />
+                <ScalarProperty Name="TravelDuration" ColumnName="TravelDuration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TeamSixmodel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TeamSixEntity" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="EmployeeMasters" EntityType="TeamSixmodel.EmployeeMaster" />
+    <EntitySet Name="ExpenseDetails" EntityType="TeamSixmodel.ExpenseDetail" />
+    <EntitySet Name="TravelDetails" EntityType="TeamSixmodel.TravelDetail" />
+    <EntitySet Name="TravelRequests" EntityType="TeamSixmodel.TravelRequest" />
+    <AssociationSet Name="FK_EID" Association="TeamSixmodel.FK_EID">
+      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+      <End Role="TravelRequest" EntitySet="TravelRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpID1" Association="TeamSixmodel.FK_EmpID1">
+      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+      <End Role="TravelDetails" EntitySet="TravelDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MRNO" Association="TeamSixmodel.FK_MRNO">
+      <End Role="TravelDetails" EntitySet="TravelDetails" />
+      <End Role="ExpenseDetails" EntitySet="ExpenseDetails" />
+    </AssociationSet>
+    <EntitySet Name="LogIns" EntityType="TeamSixmodel.LogIn" />
+  </EntityContainer>
+  <EntityType Name="EmployeeMaster">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Location" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ReimbursementAccNo" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="Designation" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="TravelRequests" Relationship="TeamSixmodel.FK_EID" FromRole="EmployeeMaster" ToRole="TravelRequest" />
+    <NavigationProperty Name="TravelDetails" Relationship="TeamSixmodel.FK_EmpID1" FromRole="EmployeeMaster" ToRole="TravelDetails" />
+  </EntityType>
+  <EntityType Name="ExpenseDetail">
+    <Key>
+      <PropertyRef Name="ExpenseReportID" />
+    </Key>
+    <Property Name="ExpenseReportID" Type="Int32" Nullable="false" />
+    <Property Name="ExpenseType" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ExpenseDate" Type="DateTime" Precision="3" />
+    <Property Name="AmountSpent" Type="Int32" />
+    <Property Name="PaymentType" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="MR_Number" Type="Int32" />
+    <Property Name="ReimbursementAccNo" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="ExpenseStatus" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="TravelDetail" Relationship="TeamSixmodel.FK_MRNO" FromRole="ExpenseDetails" ToRole="TravelDetails" />
+  </EntityType>
+  <EntityType Name="TravelDetail">
+    <Key>
+      <PropertyRef Name="MR_Number" />
+    </Key>
+    <Property Name="MR_Number" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <Property Name="ApplyDate" Type="DateTime" Precision="3" />
+    <Property Name="ReasonForTravel" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="TravelDate" Type="DateTime" Precision="3" />
+    <Property Name="TravelMode" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="FromCity" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ToCity" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="TravelDuration" Type="Int32" />
+    <NavigationProperty Name="EmployeeMaster" Relationship="TeamSixmodel.FK_EmpID1" FromRole="TravelDetails" ToRole="EmployeeMaster" />
+    <NavigationProperty Name="ExpenseDetails" Relationship="TeamSixmodel.FK_MRNO" FromRole="TravelDetails" ToRole="ExpenseDetails" />
+  </EntityType>
+  <EntityType Name="TravelRequest">
+    <Key>
+      <PropertyRef Name="TravelID" />
+    </Key>
+    <Property Name="TravelID" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <Property Name="TravelDate" Type="DateTime" Precision="3" />
+    <Property Name="FromCity" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ToCity" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="TravelDuration" Type="Int32" />
+    <NavigationProperty Name="EmployeeMaster" Relationship="TeamSixmodel.FK_EID" FromRole="TravelRequest" ToRole="EmployeeMaster" />
+  </EntityType>
+  <Association Name="FK_EID">
+    <End Role="EmployeeMaster" Type="TeamSixmodel.EmployeeMaster" Multiplicity="0..1" />
+    <End Role="TravelRequest" Type="TeamSixmodel.TravelRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeMaster">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="TravelRequest">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpID1">
+    <End Role="EmployeeMaster" Type="TeamSixmodel.EmployeeMaster" Multiplicity="0..1" />
+    <End Role="TravelDetails" Type="TeamSixmodel.TravelDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeMaster">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="TravelDetails">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MRNO">
+    <End Role="TravelDetails" Type="TeamSixmodel.TravelDetail" Multiplicity="0..1" />
+    <End Role="ExpenseDetails" Type="TeamSixmodel.ExpenseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TravelDetails">
+        <PropertyRef Name="MR_Number" />
+      </Principal>
+      <Dependent Role="ExpenseDetails">
+        <PropertyRef Name="MR_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="LogIn">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="EmployeeID" />
+    <Property Type="String" Name="PasswordHash" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Designation" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

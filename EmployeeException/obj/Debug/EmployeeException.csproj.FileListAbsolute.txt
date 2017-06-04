@@ -1,0 +1,10 @@
+D:\MODULE2EXAM\EmployeeManageMentSystem\EmployeeException\bin\Debug\EmployeeException.dll
+D:\MODULE2EXAM\EmployeeManageMentSystem\EmployeeException\bin\Debug\EmployeeException.pdb
+D:\MODULE2EXAM\EmployeeManageMentSystem\EmployeeException\obj\Debug\EmployeeException.csprojResolveAssemblyReference.cache
+D:\MODULE2EXAM\EmployeeManageMentSystem\EmployeeException\obj\Debug\EmployeeException.dll
+D:\MODULE2EXAM\EmployeeManageMentSystem\EmployeeException\obj\Debug\EmployeeException.pdb
+C:\Users\Apu\Desktop\EmployeeManageMentSystem\EmployeeException\bin\Debug\EmployeeException.dll
+C:\Users\Apu\Desktop\EmployeeManageMentSystem\EmployeeException\bin\Debug\EmployeeException.pdb
+C:\Users\Apu\Desktop\EmployeeManageMentSystem\EmployeeException\obj\Debug\EmployeeException.csprojResolveAssemblyReference.cache
+C:\Users\Apu\Desktop\EmployeeManageMentSystem\EmployeeException\obj\Debug\EmployeeException.dll
+C:\Users\Apu\Desktop\EmployeeManageMentSystem\EmployeeException\obj\Debug\EmployeeException.pdb
